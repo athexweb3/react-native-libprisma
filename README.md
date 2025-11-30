@@ -42,11 +42,11 @@ The new version of `grammars.dat` will appear in the `libprisma/grammars.dat`.
 A **React Native implementation** of this library is available at [`react-native-libprisma`](react-native-libprisma/).
 
 This package provides:
-- 🚀 High-performance syntax highlighting for React Native apps
-- 🎨 11 built-in VS Code themes
-- 📦 200+ programming languages support
-- 💪 Full TypeScript support with autocomplete
-- ⚡️ Native C++ implementation using Nitro Modules
+- High-performance syntax highlighting for React Native apps
+- 11 built-in VS Code themes
+- 200+ programming languages support
+- Full TypeScript support with autocomplete
+- Native C++ implementation using Nitro Modules
 
 **Installation:**
 ```sh
