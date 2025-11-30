@@ -1,0 +1,16 @@
+{
+  "cxxNamespace": ["libprisma"],
+  "ios": {
+    "iosModuleName": "Libprisma"
+  },
+  "android": {
+    "androidNamespace": ["libprisma"],
+    "androidCxxLibName": "libprisma"
+  },
+  "autolinking": {
+    "Libprisma": {
+      "cpp": "HybridLibprisma"
+    }
+  },
+  "ignorePaths": ["node_modules"]
+}
