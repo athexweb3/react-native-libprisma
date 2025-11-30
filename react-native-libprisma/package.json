@@ -1,6 +1,6 @@
 {
   "name": "react-native-libprisma",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "React Native client for LibPrisma, Telegram's C++ native performant code highlighter",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
