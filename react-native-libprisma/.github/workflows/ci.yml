@@ -25,6 +25,9 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
 
+      - name: Generate grammars
+        run: yarn embed-grammars
+
       - name: Lint files
         run: yarn lint
 
@@ -40,6 +43,9 @@ jobs:
 
       - name: Setup
         uses: ./.github/actions/setup
+
+      - name: Generate grammars
+        run: yarn embed-grammars
 
       - name: Run unit tests
         run: yarn test --maxWorkers=2 --coverage
