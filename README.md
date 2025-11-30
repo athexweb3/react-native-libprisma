@@ -1,5 +1,7 @@
 This is a C++ porting of [prism.js](https://github.com/PrismJS/prism) library.
 The code depends on Boost.Regex, as it's a faster and more comprehensive than STD's.
+The [React Native implementation](react-native-libprisma) uses the C++ standard library's `std::regex` instead of Boost.Regex for cross-platform compatibility.
+React Native implementation by [@athexweb3](https://github.com/athexweb3).
 
 Grammars file is generated from prism.js source code itself, instructions later in the file.
 
@@ -34,6 +36,34 @@ npm install
 npm start
 ```
 The new version of `grammars.dat` will appear in the `libprisma/grammars.dat`.
+
+## React Native Support
+
+A **React Native implementation** of this library is available at [`react-native-libprisma`](react-native-libprisma/).
+
+This package provides:
+- 🚀 High-performance syntax highlighting for React Native apps
+- 🎨 11 built-in VS Code themes
+- 📦 200+ programming languages support
+- 💪 Full TypeScript support with autocomplete
+- ⚡️ Native C++ implementation using Nitro Modules
+
+**Installation:**
+```sh
+npm install react-native-libprisma react-native-nitro-modules
+```
+
+**Quick Example:**
+```tsx
+import { tokenize, themes } from 'react-native-libprisma';
+
+const tokens = tokenize('const x = 42;', 'javascript');
+const theme = themes.peaceOfEyeTheme;
+// Use tokens and theme for syntax-highlighted rendering
+```
+
+For complete documentation, see the [React Native package README](react-native-libprisma/README.md).
+
 
 ### Supported languages
 | Language | Aliases |
