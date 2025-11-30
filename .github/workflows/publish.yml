@@ -9,7 +9,7 @@ jobs:
   publish:
     name: Publish to NPM
     runs-on: ubuntu-latest
-    environment: rnpackages
+    environment: release:prod
     permissions:
       contents: read
       id-token: write
