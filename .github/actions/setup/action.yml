@@ -1,0 +1,17 @@
+name: Setup
+description: Sets up Node.js and Yarn
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+        cache: 'yarn'
+        cache-dependency-path: react-native-libprisma/yarn.lock
+
+    - name: Install dependencies
+      shell: bash
+      working-directory: react-native-libprisma
+      run: yarn install --frozen-lockfile
