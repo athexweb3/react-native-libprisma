@@ -1,30 +1,92 @@
 #include "HybridLibprisma.hpp"
-#include "EmbeddedGrammars.h"
 #include "libprisma/TokenList.h"
 #include <sstream>
+#include <vector>
 
 namespace margelo::nitro::libprisma {
 
 HybridLibprisma::~HybridLibprisma() {}
 
-void HybridLibprisma::ensureHighlighterLoaded() {
+#include <zlib.h>
+
+void HybridLibprisma::loadGrammars(const std::string &grammars) {
   if (m_highlighter) {
     return;
   }
+  std::string decoded = base64_decode(grammars);
+  std::string decompressed = gzip_decompress(decoded);
+  m_highlighter = std::make_shared<SyntaxHighlighter>(decompressed);
+}
 
-  // Use embedded grammars data
-  std::string grammarsData(reinterpret_cast<const char *>(GRAMMARS_DATA),
-                           GRAMMARS_DATA_SIZE);
+std::string HybridLibprisma::gzip_decompress(const std::string &data) {
+  z_stream zs;
+  memset(&zs, 0, sizeof(zs));
 
-  m_highlighter = std::make_shared<SyntaxHighlighter>(grammarsData);
+  if (inflateInit2(&zs, 16 + MAX_WBITS) != Z_OK) {
+    throw std::runtime_error("inflateInit2 failed while decompressing.");
+  }
+
+  zs.next_in = (Bytef *)data.data();
+  zs.avail_in = data.size();
+
+  int ret;
+  char buffer[32768];
+  std::string outstring;
+
+  do {
+    zs.next_out = reinterpret_cast<Bytef *>(buffer);
+    zs.avail_out = sizeof(buffer);
+
+    ret = inflate(&zs, 0);
+
+    if (outstring.size() < zs.total_out) {
+      outstring.append(buffer, zs.total_out - outstring.size());
+    }
+
+  } while (ret == Z_OK);
+
+  inflateEnd(&zs);
+
+  if (ret != Z_STREAM_END) {
+    throw std::runtime_error("Exception during zlib decompression: (" +
+                             std::to_string(ret) + ") " + zs.msg);
+  }
+
+  return outstring;
 }
 
 std::string HybridLibprisma::tokenizeToJson(const std::string &code,
                                             const std::string &language) {
-  ensureHighlighterLoaded();
+  if (!m_highlighter) {
+    // Fallback or error if grammars not loaded?
+    // For now, let's just return empty array or handle gracefully
+    // But ideally loadGrammars should be called first.
+    return "[]";
+  }
 
   TokenList tokens = m_highlighter->tokenize(code, language);
   return tokensToJson(tokens);
+}
+
+std::string HybridLibprisma::base64_decode(const std::string &in) {
+  std::string out;
+  std::vector<int> T(256, -1);
+  for (int i = 0; i < 64; i++)
+    T["ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"[i]] =
+        i;
+
+  int val = 0, valb = -8;
+  for (unsigned char c : in) {
+    if (T[c] == -1)
+      break;
+    val = (val << 6) + T[c];
+    valb += 6;
+    if (valb >= 0) {
+      out.push_back(char((val >> valb) & 0xFF));
+      valb -= 8;
+    }
+  }
+  return out;
 }
 
 std::string HybridLibprisma::escapeJson(const std::string &str) {

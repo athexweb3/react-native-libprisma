@@ -26,10 +26,12 @@ include_directories(
 )
 
 find_library(LOG_LIB log)
+find_package(ZLIB REQUIRED)
 
 # Link all libraries together
 target_link_libraries(
         ${PACKAGE_NAME}
         ${LOG_LIB}
+        ZLIB::ZLIB
         android                                   # <-- Android core
 )

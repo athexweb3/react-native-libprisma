@@ -100,6 +100,30 @@ export default function App() {
     handleTokenize(selectedLang);
   }, [selectedLang]);
 
+  const runStressTest = () => {
+    const baseCode = CODE_SAMPLES.javascript;
+    // Generate ~10,000 lines of code
+    const largeCode = Array(2000).fill(baseCode).join('\n');
+
+    console.log(`Starting stress test with ${largeCode.length} characters...`);
+    const start = performance.now();
+
+    try {
+      const result = tokenize(largeCode, 'javascript');
+      const end = performance.now();
+      const duration = (end - start).toFixed(2);
+
+      console.log(`Tokenized ${result.length} tokens in ${duration}ms`);
+      alert(`Success! Tokenized ${largeCode.length} chars (${result.length} tokens) in ${duration}ms`);
+
+      // Don't render all tokens to avoid React rendering bottleneck, just show a sample
+      setTokens(result.slice(0, 100));
+      setError(`Stress test passed: ${duration}ms (Showing first 100 tokens only)`);
+    } catch (err) {
+      setError('Stress test failed: ' + (err instanceof Error ? err.message : String(err)));
+    }
+  };
+
   const currentTheme = themes[selectedThemeName] || themes.peaceOfEyeTheme;
   const themeBackground = currentTheme.colors.background;
   const themeForeground = currentTheme.colors.foreground;
@@ -133,6 +157,12 @@ export default function App() {
               </TouchableOpacity>
             )
           )}
+          <TouchableOpacity
+            style={[styles.button, { backgroundColor: '#e74c3c' }]}
+            onPress={runStressTest}
+          >
+            <Text style={styles.buttonText}>⚡ Stress Test (10k lines)</Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
 

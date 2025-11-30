@@ -28,6 +28,7 @@ Pod::Spec.new do |s|
 
   s.dependency 'React-jsi'
   s.dependency 'React-callinvoker'
+  s.library = 'z'
 
   load 'nitrogen/generated/ios/Libprisma+autolinking.rb'
   add_nitrogen_files(s)

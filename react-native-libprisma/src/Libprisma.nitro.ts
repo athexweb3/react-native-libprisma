@@ -51,4 +51,12 @@ export interface Libprisma
    * ```
    */
   tokenizeToJson(code: string, language: string): string;
+
+  /**
+   * Load grammars from a base64 string.
+   * This should be called once before using tokenizeToJson.
+   *
+   * @param grammars - Base64 encoded grammar data
+   */
+  loadGrammars(grammars: string): void;
 }

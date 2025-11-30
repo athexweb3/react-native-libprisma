@@ -460,12 +460,17 @@ export type Language =
   | 'yang'
   | string; // Allow any string for unlisted or custom languages
 
+import { GRAMMARS_DATA } from './grammars';
+
 /**
  * Creates and returns the LibPrisma Hybrid Object.
  * This object provides high-performance syntax highlighting for React Native.
  */
 export const HybridLibprisma =
   NitroModules.createHybridObject<Libprisma>('Libprisma');
+
+// Load grammars immediately
+HybridLibprisma.loadGrammars(GRAMMARS_DATA);
 
 /**
  * Tokenize source code into syntax-highlighted tokens.

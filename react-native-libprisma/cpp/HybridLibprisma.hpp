@@ -20,7 +20,7 @@ public:
   explicit HybridLibprisma() : HybridObject(TAG) {}
   virtual ~HybridLibprisma();
 
-  /** 
+  /**
    * Tokenize source code into syntax-highlighted tokens.
    * Returns a JSON string representation.
    *
@@ -30,6 +30,11 @@ public:
    */
   std::string tokenizeToJson(const std::string &code,
                              const std::string &language) override;
+
+  /**
+   * Load grammars from a base64 string.
+   */
+  void loadGrammars(const std::string &grammars) override;
 
 private:
   std::shared_ptr<SyntaxHighlighter> m_highlighter;
@@ -50,9 +55,14 @@ private:
   std::string escapeJson(const std::string &str);
 
   /**
-   * Ensure highlighter is loaded
+   * Decode base64 string
    */
-  void ensureHighlighterLoaded();
+  std::string base64_decode(const std::string &in);
+
+  /**
+   * Decompress gzip data
+   */
+  std::string gzip_decompress(const std::string &data);
 };
 
 } // namespace margelo::nitro::libprisma
