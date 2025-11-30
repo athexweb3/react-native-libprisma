@@ -6,7 +6,7 @@ This is a new [**React Native**](https://reactnative.dev) project, bootstrapped 
 
 ## Step 1: Start Metro
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+First, you will need to run Metro, the JavaScript build tool for React Native.
 
 To start the Metro dev server, run the following command from the root of your React Native project:
 
@@ -73,9 +73,9 @@ When you want to forcefully reload, for example to reset the state of your app, 
 - **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
 - **iOS**: Press <kbd>R</kbd> in iOS Simulator.
 
-## Congratulations! :tada:
+## Congratulations!
 
-You've successfully run and modified your React Native App. :partying_face:
+You've successfully run and modified your React Native App.
 
 ### Now what?
 
@@ -91,7 +91,7 @@ If you're having issues getting the above steps to work, see the [Troubleshootin
 To learn more about React Native, take a look at the following resources:
 
 - [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- [Getting Started](https://reactnative.dev/docs/environment-setup) - an overview of React Native and how setup your environment.
+- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a guided tour of the React Native basics.
+- [Blog](https://reactnative.dev/blog) - read the latest official React Native Blog posts.
+- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub repository for React Native.

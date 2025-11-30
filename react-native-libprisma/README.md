@@ -1,15 +1,15 @@
 # react-native-libprisma
 
-⚡️ **High-performance syntax highlighting for React Native** powered by a C++ port of [Prism.js](https://prismjs.com/), supporting **200+ programming languages** with **built-in themes**.
+High-performance syntax highlighting for React Native powered by a C++ port of [Prism.js](https://prismjs.com/), supporting 200+ programming languages with built-in themes.
 
 ## Features
 
-- 🚀 **Blazing Fast** - C++ implementation with native performance
-- 🎨 **11 Built-in Themes** - Beautiful themes ready to use
-- 🌐 **200+ Languages** - Comprehensive language support
-- 📦 **Zero JS Dependencies** - Pure native module using Nitro Modules
-- 💪 **TypeScript First** - Full type safety with autocomplete
-- 🎯 **Easy to Use** - Simple API with powerful features
+- **Blazing Fast** - C++ implementation with native performance
+- **11 Built-in Themes** - Beautiful themes ready to use
+- **200+ Languages** - Comprehensive language support
+- **Zero JS Dependencies** - Pure native module using Nitro Modules
+- **TypeScript First** - Full type safety with autocomplete
+- **Easy to Use** - Simple API with powerful features
 
 ## Installation
 
@@ -382,4 +382,4 @@ MIT
 
 ---
 
-Bootstrapped with ❤️ using [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
+Bootstrapped using [create-react-native-library](https://github.com/callstack/react-native-builder-bob)

@@ -38,5 +38,5 @@ export const GRAMMARS_DATA = "${base64}";
 console.log(`Writing ${outputFile}...`);
 fs.writeFileSync(outputFile, content);
 
-console.log('✅ Successfully embedded grammars.dat as TypeScript!');
+console.log('Successfully embedded grammars.dat as TypeScript!');
 console.log(`   Output: ${outputFile}`);

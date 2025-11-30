@@ -126,7 +126,7 @@ export default function App() {
     } catch (err) {
       setError(
         'Stress test failed: ' +
-          (err instanceof Error ? err.message : String(err))
+        (err instanceof Error ? err.message : String(err))
       );
     }
   };
@@ -168,7 +168,7 @@ export default function App() {
             style={[styles.button, { backgroundColor: '#e74c3c' }]}
             onPress={runStressTest}
           >
-            <Text style={styles.buttonText}>⚡ Stress Test (10k lines)</Text>
+            <Text style={styles.buttonText}>Stress Test (10k lines)</Text>
           </TouchableOpacity>
         </ScrollView>
       </View>
