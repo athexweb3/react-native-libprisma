@@ -114,13 +114,20 @@ export default function App() {
       const duration = (end - start).toFixed(2);
 
       console.log(`Tokenized ${result.length} tokens in ${duration}ms`);
-      alert(`Success! Tokenized ${largeCode.length} chars (${result.length} tokens) in ${duration}ms`);
+      alert(
+        `Success! Tokenized ${largeCode.length} chars (${result.length} tokens) in ${duration}ms`
+      );
 
       // Don't render all tokens to avoid React rendering bottleneck, just show a sample
       setTokens(result.slice(0, 100));
-      setError(`Stress test passed: ${duration}ms (Showing first 100 tokens only)`);
+      setError(
+        `Stress test passed: ${duration}ms (Showing first 100 tokens only)`
+      );
     } catch (err) {
-      setError('Stress test failed: ' + (err instanceof Error ? err.message : String(err)));
+      setError(
+        'Stress test failed: ' +
+          (err instanceof Error ? err.message : String(err))
+      );
     }
   };
 

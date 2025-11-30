@@ -17,7 +17,11 @@ console.log(`Original size: ${size} bytes (${(size / 1024).toFixed(2)} KB)`);
 // Compress with Gzip
 const compressed = zlib.gzipSync(data);
 const compressedSize = compressed.length;
-console.log(`Compressed size: ${compressedSize} bytes (${(compressedSize / 1024).toFixed(2)} KB)`);
+console.log(
+  `Compressed size: ${compressedSize} bytes (${(compressedSize / 1024).toFixed(
+    2
+  )} KB)`
+);
 
 // Convert to base64
 const base64 = compressed.toString('base64');
