@@ -175,6 +175,19 @@ interface Token {
 
 See the [CONTRIBUTING.md](CONTRIBUTING.md) guide for details on how to contribute to this project.
 
+## 🙏 Acknowledgements
+
+This project builds upon the excellent work of:
+
+- **[Telegram](https://github.com/TelegramMessenger/libprisma)** - C++ implementation of the syntax highlighter
+- **[Prism.js](https://prismjs.com/)** - Core syntax highlighting engine and grammar definitions
+- **[LearnWithSumit](https://github.com/learnwithsumit)** - VSCode theme inspiration
+
+**Author Contributions:**
+- React Native compatibility layer and native module integration
+- C++ core modifications for cross-platform React Native support
+- Unified API design merging all components into a cohesive library
+
 ## 📄 License
 
 MIT
