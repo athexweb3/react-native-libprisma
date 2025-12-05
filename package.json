@@ -34,10 +34,10 @@
     "!**/.*"
   ],
   "scripts": {
-    "example": "yarn workspace react-native-libprisma-example",
+    "example": "bun workspace react-native-libprisma-example",
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
     "embed-grammars": "node scripts/embed-grammars.js",
-    "prepare": "yarn embed-grammars && bob build",
+    "prepare": "bun run embed-grammars && bob build",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "release": "release-it --only-version",
