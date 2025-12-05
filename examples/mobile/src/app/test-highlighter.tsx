@@ -173,27 +173,27 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: 16,
-    paddingTop: 50,
-    paddingBottom: 12,
+    paddingTop: 46,
+    paddingBottom: 8,
     backgroundColor: '#161b22',
     borderBottomWidth: 1,
     borderBottomColor: '#30363d',
   },
   title: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: '600',
     color: '#f0f6fc',
-    marginBottom: 4,
+    marginBottom: 2,
   },
   subtitle: {
-    fontSize: 12,
+    fontSize: 11,
     color: '#8b949e',
   },
   controlsContainer: {
     backgroundColor: '#161b22',
     borderBottomWidth: 1,
     borderBottomColor: '#30363d',
-    paddingVertical: 12,
+    paddingVertical: 8,
   },
   controlGroup: {
     paddingHorizontal: 16,
