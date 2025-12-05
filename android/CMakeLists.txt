@@ -37,7 +37,6 @@ target_include_directories(
 target_link_libraries(
     ${PACKAGE_NAME}
     ReactAndroid::jsi
-    ReactAndroid::reactnativejni
     fbjni::fbjni
     android
     log
