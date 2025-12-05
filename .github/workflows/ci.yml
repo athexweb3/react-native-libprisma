@@ -76,8 +76,7 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
 
-      - name: Generate nitrogen code
-        run: bun run nitrogen
+
 
       - name: Cache turborepo for Android
         uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
@@ -140,8 +139,7 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
 
-      - name: Generate nitrogen code
-        run: bun run nitrogen
+
 
       - name: Cache turborepo for iOS
         uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
