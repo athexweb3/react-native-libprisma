@@ -166,10 +166,8 @@ jobs:
       - name: Install cocoapods
         if: env.turbo_cache_hit != 1 && steps.cocoapods-cache.outputs.cache-hit != 'true'
         run: |
-          cd examples/mobile
-          bundle install
-          bundle exec pod repo update --verbose
-          bundle exec pod install --project-directory=ios
+          cd examples/mobile/ios
+          pod install
 
       - name: Build example for iOS
         run: |
