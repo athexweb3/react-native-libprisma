@@ -1,0 +1,82 @@
+name: Build Android
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    
+    env:
+      TURBO_CACHE_DIR: .turbo/android
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.0
+      
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+      
+      - name: Generate grammars
+        run: bun run embed-grammars
+      
+      - name: Build library
+        run: bun run prepare
+      
+      - name: Cache turborepo for Android
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.TURBO_CACHE_DIR }}
+          key: ${{ runner.os }}-turborepo-android-${{ hashFiles('bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-turborepo-android-
+      
+      - name: Install JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+      
+      - name: Setup Android SDK
+        run: |
+          /bin/bash -c "yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null"
+      
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/wrapper
+            ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('examples/mobile/android/gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      
+      - name: Build Android example app
+        working-directory: examples/mobile
+        run: |
+          cd android
+          ./gradlew assembleRelease --no-daemon
+        env:
+          JAVA_OPTS: "-XX:MaxHeapSize=6g"
+      
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release
+          path: examples/mobile/android/app/build/outputs/apk/release/app-release.apk

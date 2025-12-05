@@ -1,0 +1,29 @@
+name: Update grammars
+
+on: [ workflow_dispatch ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup Bun
+      uses: oven-sh/setup-bun@v2
+      with:
+        bun-version: 1.3.0
+    - run: bun install
+    - run: bun start
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v3.1.3
+      with:
+        name: grammars.dat
+        path: ./common/cpp/assets/grammars.dat
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v5
+      with:
+        commit-message: Update grammars
+        title: Update grammars
+        branch: update-grammars

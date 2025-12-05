@@ -5,26 +5,30 @@
  * @author Novus Nota (https://github.com/novusnota)
  * @license MIT
  */
-(function(Prism) {
+(function (Prism) {
   Prism.languages.tact = {
     // reserved keywords
     'keyword': [
       {
-        pattern: /\b(?:abstract|as|catch|const|contract(?!:)|do|else|extend|extends|foreach|fun|get|if|in|import|initOf|inline|let|message(?!:)|mutates|native|override|primitive|public|repeat|return|self|struct(?!:)|trait(?!:)|try|until|virtual|while|with)\b/,
+        pattern:
+          /\b(?:abstract|as|catch|const|contract(?!:)|do|else|extend|extends|foreach|fun|get|if|in|import|initOf|inline|let|message(?!:)|mutates|native|override|primitive|public|repeat|return|self|struct(?!:)|trait(?!:)|try|until|virtual|while|with)\b/,
       },
-      { // keyword after as
+      {
+        // keyword after as
         pattern: /(\bas\s+)\w+/,
         lookbehind: true,
         greedy: true,
       },
-      { // reserved function names
-        pattern: /\b(?:bounced|external|init|receive)\b/
+      {
+        // reserved function names
+        pattern: /\b(?:bounced|external|init|receive)\b/,
       },
     ],
 
     // built-in types
     'builtin': {
-      pattern: /\b(?:Address|Bool|Builder|Cell|Int|Slice|String|StringBuilder)\b/,
+      pattern:
+        /\b(?:Address|Bool|Builder|Cell|Int|Slice|String|StringBuilder)\b/,
     },
 
     // SCREAMING_SNAKE_CASE for null values and names of constants
@@ -44,18 +48,20 @@
 
     // mappings to FunC
     'attribute': [
-      { // functions
+      {
+        // functions
         pattern: /@name/,
         inside: {
-          'function': /.+/,
+          function: /.+/,
         },
       },
-      { // contract interfaces
+      {
+        // contract interfaces
         pattern: /@interface/,
         inside: {
-          'function': /.+/,
-        }
-      }
+          function: /.+/,
+        },
+      },
     ],
 
     'function': {
@@ -67,19 +73,24 @@
     },
 
     'number': [
-      { // hexadecimal, case-insensitive /i
+      {
+        // hexadecimal, case-insensitive /i
         pattern: /\b0x[0-9a-f](?:_?[0-9a-f])*\b/i,
       },
-      { // octal, case-insensitive /i
+      {
+        // octal, case-insensitive /i
         pattern: /\b0o[0-7](?:_?[0-7])*\b/i,
       },
-      { // binary, case-insensitive /i
+      {
+        // binary, case-insensitive /i
         pattern: /\b0b[01](?:_?[01])*\b/i,
       },
-      { // decimal integers, starting with 0
+      {
+        // decimal integers, starting with 0
         pattern: /\b0\d*\b/,
       },
-      { // other decimal integers
+      {
+        // other decimal integers
         pattern: /\b[1-9](?:_?\d)*\b/,
       },
     ],
@@ -91,22 +102,23 @@
     },
 
     'comment': [
-      { // single-line
+      {
+        // single-line
         pattern: /(^|[^\\:])\/\/.*/,
         lookbehind: true,
         greedy: true,
       },
-      { // multi-line
+      {
+        // multi-line
         pattern: /(^|[^\\])\/\*[\s\S]*?(?:\*\/|$)/,
         lookbehind: true,
         greedy: true,
-      }
+      },
     ],
 
     'operator': {
-      'pattern': /![!=]?|[+\-*/%=]=?|[<>]=|<<?|>>?|\|\|?|&&?|\^/,
+      pattern: /![!=]?|[+\-*/%=]=?|[<>]=|<<?|>>?|\|\|?|&&?|\^/,
     },
-
   };
 
   // strings, made this way to not collide with other entities
@@ -115,21 +127,25 @@
       pattern: /(?:(")(?:\\.|(?!\1)[^\\\r\n])*\1(?!\1))/,
       greedy: true,
       inside: {
-        'regex': [
-          { // \\ \" \n \r \t \v \b \f
+        regex: [
+          {
+            // \\ \" \n \r \t \v \b \f
             pattern: /\\[\\"nrtvbf]/,
           },
-          { // hexEscape, \x00 through \xFF
+          {
+            // hexEscape, \x00 through \xFF
             pattern: /\\x[0-9a-fA-F]{2}/,
           },
-          { // unicodeEscape, \u0000 through \uFFFF
+          {
+            // unicodeEscape, \u0000 through \uFFFF
             pattern: /\\u[0-9a-fA-F]{4}/,
           },
-          { // unicodeCodePoint, \u{0} through \u{FFFFFF}
+          {
+            // unicodeCodePoint, \u{0} through \u{FFFFFF}
             pattern: /\\u\{[0-9a-fA-F]{1,6}\}/,
           },
         ],
-        'string': {
+        string: {
           pattern: /[\s\S]+/,
         },
       },
@@ -138,17 +154,17 @@
 
   // map and bounced message generic type modifiers
   Prism.languages.insertBefore('tact', 'keyword', {
-    'generics': {
+    generics: {
       pattern: /(?:\b(?:bounced|map)\b<[^\\\r\n]*>)/,
       greedy: true,
       inside: {
         'builtin': [
-          Prism.languages['tact']['builtin'],
+          Prism.languages.tact.builtin,
           {
-            pattern: /\b(?:bounced(?=<)|map(?=<))\b/
+            pattern: /\b(?:bounced(?=<)|map(?=<))\b/,
           },
         ],
-        'class-name': Prism.languages['tact']['class-name'],
+        'class-name': Prism.languages.tact['class-name'],
         'punctuation': {
           pattern: /[<>(),.?]/,
         },
@@ -165,4 +181,4 @@
       },
     },
   });
-}(Prism));
+})(Prism);
