@@ -11,5 +11,5 @@ runs:
 
     - name: Install dependencies
       shell: bash
-      working-directory: react-native-libprisma
+
       run: bun install --frozen-lockfile

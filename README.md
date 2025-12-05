@@ -45,8 +45,6 @@
 ```bash
 npm install react-native-libprisma
 # or
-yarn add react-native-libprisma
-# or
 bun add react-native-libprisma
 ```
 
