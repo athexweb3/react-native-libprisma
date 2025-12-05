@@ -42,7 +42,7 @@ If the build process doesn't auto-generate:
 
 ```bash
 cd react-native-libprisma
-yarn install
+bun install
 node scripts/embed-grammars.js
 ```
 
