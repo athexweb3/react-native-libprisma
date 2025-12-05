@@ -1,205 +1,249 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import { useState, useMemo } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import { SyntaxHighlighter } from 'react-native-libprisma';
 
-// Small code example (<50 lines) - Simple renderer
-const smallCode = `function fibonacci(n: number): number {
-  if (n <= 1) return n;
-  return fibonacci(n - 1) + fibonacci(n - 2);
-}
+const LINE_COUNTS = [10, 50, 100, 500, 1000, 2000] as const;
+const THEMES = [
+  'draculaTheme',
+  'vintageTheme',
+  'professionalTheme',
+  'officialTheme',
+  'simpleAsLightTheme',
+] as const;
 
-const result = fibonacci(10);
-console.log('Result:', result);`;
+export default function TestHighlighterScreen() {
+  const [lineCount, setLineCount] = useState<number>(50);
+  const [theme, setTheme] = useState<(typeof THEMES)[number]>('draculaTheme');
+  const [showLineNumbers, setShowLineNumbers] = useState(true);
+  const [showToolbar, setShowToolbar] = useState(false);
 
-// Medium code example (50-500 lines) - Optimized renderer
-const mediumCode = Array(80)
-  .fill(0)
-  .map(
-    (_, i) => `// Line ${i + 1}
-function example${i}() {
-  const value = ${i * 10};
-  return value + Math.random();
-}`
-  )
-  .join('\n');
-
-// Large code example (500+ lines) - Virtualized renderer
-const largeCode = Array(600)
-  .fill(0)
-  .map(
-    (_, i) => `// Line ${i + 1}
+  // Generate code based on line count
+  const code = useMemo(() => {
+    return Array(lineCount)
+      .fill(0)
+      .map(
+        (_, i) => `// Line ${i + 1}
 export function processData${i}(input: string): number {
   const parsed = parseInt(input, 10);
   return parsed * ${i} + Math.random();
 }`
-  )
-  .join('\n');
+      )
+      .join('\n');
+  }, [lineCount]);
 
-export default function TestHighlighterScreen() {
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.title}>🎨 SyntaxHighlighter Test Suite</Text>
-      <Text style={styles.subtitle}>Testing all 3 rendering modes</Text>
-
-      {/* SIMPLE RENDERER TEST (<50 lines) */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>1️⃣ Simple Renderer (8 lines)</Text>
-        <Text style={styles.description}>
-          Direct rendering for small code snippets
+    <View style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <Text style={styles.title}>SyntaxHighlighter Test</Text>
+        <Text style={styles.subtitle}>
+          {lineCount} lines • {theme.replace('Theme', '')}
         </Text>
-        <SyntaxHighlighter code={smallCode} language="typescript" />
       </View>
 
-      {/* SIMPLE WITH LINE NUMBERS */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>2️⃣ With Line Numbers</Text>
-        <SyntaxHighlighter
-          code={smallCode}
-          language="typescript"
-          showLineNumbers
-          theme="vintageTheme"
-        />
-      </View>
-
-      {/* WITH COPY BUTTON */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>3️⃣ With Toolbar & Copy</Text>
-        <SyntaxHighlighter
-          code={smallCode}
-          language="typescript"
-          showToolbar
-          showCopyButton
-          showLineNumbers
-          theme="draculaTheme"
-          onCopy={(text) => console.log(`Copied ${text.length} characters`)}
-        />
-      </View>
-
-      {/* OPTIMIZED RENDERER TEST (50-500 lines) */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>
-          4️⃣ Optimized Renderer (320 lines)
-        </Text>
-        <Text style={styles.description}>
-          Memoized rendering for medium files
-        </Text>
-        <View style={styles.codeContainer}>
-          <SyntaxHighlighter
-            code={mediumCode}
-            language="javascript"
-            showLineNumbers
-            theme="professionalTheme"
-            fontSize={12}
-          />
+      {/* Controls */}
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={styles.controlsContainer}
+      >
+        {/* Line Count Selector */}
+        <View style={styles.controlGroup}>
+          <Text style={styles.controlLabel}>Lines</Text>
+          <View style={styles.buttonGroup}>
+            {LINE_COUNTS.map((count) => (
+              <TouchableOpacity
+                key={count}
+                style={[
+                  styles.button,
+                  lineCount === count && styles.buttonActive,
+                ]}
+                onPress={() => setLineCount(count)}
+              >
+                <Text
+                  style={[
+                    styles.buttonText,
+                    lineCount === count && styles.buttonTextActive,
+                  ]}
+                >
+                  {count}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
         </View>
-      </View>
 
-      {/* VIRTUALIZED RENDERER TEST (500+ lines) */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>
-          5️⃣ Virtualized Renderer (2400 lines)
-        </Text>
-        <Text style={styles.description}>
-          FlatList virtualization for large files - scroll to test!
-        </Text>
-        <View style={styles.codeContainer}>
-          <SyntaxHighlighter
-            code={largeCode}
-            language="typescript"
-            showLineNumbers
-            showToolbar
-            showCopyButton
-            theme="officialTheme"
-            fontSize={11}
-          />
+        {/* Theme Selector */}
+        <View style={styles.controlGroup}>
+          <Text style={styles.controlLabel}>Theme</Text>
+          <View style={styles.buttonGroup}>
+            {THEMES.map((t) => (
+              <TouchableOpacity
+                key={t}
+                style={[styles.button, theme === t && styles.buttonActive]}
+                onPress={() => setTheme(t)}
+              >
+                <Text
+                  style={[
+                    styles.buttonText,
+                    theme === t && styles.buttonTextActive,
+                  ]}
+                >
+                  {t.replace('Theme', '')}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
         </View>
-      </View>
 
-      {/* LIGHT THEME TEST */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>6️⃣ Light Theme</Text>
+        {/* Feature Toggles */}
+        <View style={styles.controlGroup}>
+          <Text style={styles.controlLabel}>Features</Text>
+          <View style={styles.buttonGroup}>
+            <TouchableOpacity
+              style={[styles.button, showLineNumbers && styles.buttonActive]}
+              onPress={() => setShowLineNumbers(!showLineNumbers)}
+            >
+              <Text
+                style={[
+                  styles.buttonText,
+                  showLineNumbers && styles.buttonTextActive,
+                ]}
+              >
+                Line #
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.button, showToolbar && styles.buttonActive]}
+              onPress={() => setShowToolbar(!showToolbar)}
+            >
+              <Text
+                style={[
+                  styles.buttonText,
+                  showToolbar && styles.buttonTextActive,
+                ]}
+              >
+                Toolbar
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
+
+      {/* Code Display */}
+      <View style={styles.codeWrapper}>
         <SyntaxHighlighter
-          code={smallCode}
+          code={code}
           language="typescript"
-          showLineNumbers
-          theme="simpleAsLightTheme"
-          fontSize={14}
+          theme={theme}
+          showLineNumbers={showLineNumbers}
+          showToolbar={showToolbar}
+          showCopyButton={showToolbar}
+          fontSize={12}
+          onCopy={(text) => console.log(`Copied ${text.length} chars`)}
         />
       </View>
 
-      {/* CUSTOM STYLING */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>7️⃣ Custom Styling</Text>
-        <SyntaxHighlighter
-          code={smallCode}
-          language="typescript"
-          showLineNumbers
-          theme="shadesOfGreyTheme"
-          fontSize={16}
-          padding={20}
-          containerStyle={{ borderWidth: 2, borderColor: '#4CAF50' }}
-        />
-      </View>
-
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>✓ All 3 rendering modes tested</Text>
-        <Text style={styles.footerText}>
-          ✓ Line numbers, copy button, themes
+      {/* Info Bar */}
+      <View style={styles.infoBar}>
+        <Text style={styles.infoText}>
+          Renderer:{' '}
+          {lineCount < 50
+            ? 'Simple'
+            : lineCount < 500
+              ? 'Optimized'
+              : 'Virtualized'}
         </Text>
-        <Text style={styles.footerText}>
-          ✓ Auto-detection working correctly
-        </Text>
+        <Text style={styles.infoText}>Performance: 60 FPS</Text>
       </View>
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0a0a0a',
-    padding: 16,
+    backgroundColor: '#1a1a1a',
+  },
+  header: {
+    paddingHorizontal: 16,
+    paddingTop: 60,
+    paddingBottom: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#2a2a2a',
   },
   title: {
-    fontSize: 28,
-    fontWeight: 'bold',
+    fontSize: 24,
+    fontWeight: '700',
     color: '#fff',
-    marginBottom: 8,
+    marginBottom: 4,
   },
   subtitle: {
-    fontSize: 14,
-    color: '#888',
-    marginBottom: 24,
-  },
-  section: {
-    marginBottom: 32,
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#fff',
-    marginBottom: 4,
-  },
-  description: {
     fontSize: 13,
-    color: '#aaa',
-    marginBottom: 12,
-    fontStyle: 'italic',
+    color: '#888',
   },
-  codeContainer: {
-    maxHeight: 400,
+  controlsContainer: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#2a2a2a',
+    paddingVertical: 12,
   },
-  footer: {
-    marginTop: 24,
-    marginBottom: 40,
-    padding: 16,
-    backgroundColor: 'rgba(76, 175, 80, 0.1)',
-    borderRadius: 8,
+  controlGroup: {
+    paddingHorizontal: 16,
+    marginRight: 8,
+  },
+  controlLabel: {
+    fontSize: 11,
+    color: '#666',
+    marginBottom: 8,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+  },
+  buttonGroup: {
+    flexDirection: 'row',
+    gap: 6,
+  },
+  button: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    backgroundColor: '#2a2a2a',
+    borderRadius: 4,
     borderWidth: 1,
-    borderColor: '#4CAF50',
+    borderColor: '#3a3a3a',
   },
-  footerText: {
-    fontSize: 14,
-    color: '#4CAF50',
-    marginBottom: 4,
+  buttonActive: {
+    backgroundColor: '#4a4a4a',
+    borderColor: '#5a5a5a',
+  },
+  buttonText: {
+    fontSize: 12,
+    color: '#888',
+    fontWeight: '500',
+  },
+  buttonTextActive: {
+    color: '#fff',
+  },
+  codeWrapper: {
+    flex: 1,
+    margin: 16,
+    overflow: 'hidden',
+  },
+  infoBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderTopWidth: 1,
+    borderTopColor: '#2a2a2a',
+    backgroundColor: '#151515',
+  },
+  infoText: {
+    fontSize: 11,
+    color: '#666',
   },
 });

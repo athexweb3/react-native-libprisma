@@ -8,6 +8,7 @@ import {
   Alert,
 } from 'react-native';
 import { router } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 import ProgressiveAlert from 'rn-progresive-alert';
 import {
   tokenize,
@@ -252,9 +253,14 @@ export default function App() {
 
   return (
     <View style={[styles.container, { backgroundColor: themeBackground }]}>
-      <Text style={[styles.title, { color: themeForeground }]}>
-        LibPrisma Syntax Highlighter
-      </Text>
+      <View style={styles.header}>
+        <Text style={[styles.title, { color: themeForeground }]}>
+          LibPrisma
+        </Text>
+        <TouchableOpacity onPress={() => router.push('/test-highlighter')}>
+          <Ionicons name="code" size={24} color={themeForeground} />
+        </TouchableOpacity>
+      </View>
 
       {/* Language Selector */}
       <View style={styles.section}>
@@ -375,10 +381,16 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: 60,
   },
+  header: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 20,
+  },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
   },
   section: {
     marginBottom: 12,
