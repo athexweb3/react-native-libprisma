@@ -501,3 +501,4 @@ export function tokenize(code: string, language: Language): Token[] {
 export * from './themes';
 export type { ThemeName, PrismTheme } from './themes';
 export * from './utils';
+export * from './components';
