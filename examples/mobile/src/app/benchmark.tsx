@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useLocalSearchParams, router } from 'expo-router';
+import Entypo from '@expo/vector-icons/Entypo';
 
 interface BenchmarkResult {
   language: string;
@@ -14,7 +15,6 @@ interface BenchmarkResult {
   tokensPerSecond: number;
   codeLength: number;
 }
-import Entypo from '@expo/vector-icons/Entypo';
 
 export default function BenchmarkScreen() {
   const params = useLocalSearchParams();
