@@ -1,0 +1,16 @@
+export { typescriptCode } from './typescript';
+export { typescriptCode as javascriptCode } from './typescript';
+export { cppCode } from './cpp';
+export { rustCode } from './rust';
+export { javaCode } from './java';
+export { objcppCode } from './objcpp';
+export { swiftCode } from './swift';
+export { solidityCode } from './solidity';
+export { pythonCode } from './python';
+export { goCode } from './go';
+export { kotlinCode } from './kotlin';
+export { csharpCode } from './csharp';
+export { phpCode } from './php';
+export { rubyCode } from './ruby';
+export { dartCode } from './dart';
+export { scalaCode } from './scala';
