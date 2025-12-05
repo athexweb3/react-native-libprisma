@@ -163,11 +163,15 @@ jobs:
         with:
           xcode-version: ${{ env.XCODE_VERSION }}
 
-      - name: Install cocoapods
-        if: env.turbo_cache_hit != 1 && steps.cocoapods-cache.outputs.cache-hit != 'true'
-        run: |
-          cd examples/mobile/ios
-          pod install
+      - name: Prebuild native directories
+        if: env.turbo_cache_hit != 1
+        working-directory: examples/mobile
+        run: bunx expo prebuild --no-install
+
+      - name: Install CocoaPods
+        if: env.turbo_cache_hit != 1
+        working-directory: examples/mobile/ios
+        run: pod install
 
       - name: Build example for iOS
         run: |

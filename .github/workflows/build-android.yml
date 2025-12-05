@@ -67,6 +67,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
       
+      - name: Prebuild native directories
+        working-directory: examples/mobile
+        run: bunx expo prebuild --no-install
+      
       - name: Build Android example app
         working-directory: examples/mobile
         run: |

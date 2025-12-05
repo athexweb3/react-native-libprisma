@@ -49,11 +49,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-turborepo-ios-
       
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.2'
-          bundler-cache: true
+      - name: Prebuild native directories
+        working-directory: examples/mobile
+        run: npx expo prebuild --no-install
       
       - name: Cache CocoaPods
         uses: actions/cache@v4
@@ -67,19 +65,17 @@ jobs:
       
       - name: Install CocoaPods dependencies
         working-directory: examples/mobile/ios
-        run: |
-          bundle install
-          bundle exec pod install
+        run: pod install
       
       - name: Build iOS example app
         working-directory: examples/mobile/ios
         run: |
-          xcodebuild -workspace LibprismaExample.xcworkspace \
-            -scheme LibprismaExample \
+          xcodebuild -workspace mobile.xcworkspace \
+            -scheme mobile \
             -configuration Release \
             -destination 'generic/platform=iOS' \
             -archivePath $PWD/build/LibprismaExample.xcarchive \
-            archive | xcpretty
+            archive
       
       - name: Export IPA
         working-directory: examples/mobile/ios
@@ -87,8 +83,7 @@ jobs:
           xcodebuild -exportArchive \
             -archivePath $PWD/build/LibprismaExample.xcarchive \
             -exportOptionsPlist $PWD/exportOptions.plist \
-            -exportPath $PWD/build \
-            | xcpretty
+            -exportPath $PWD/build
       
       - name: Upload IPA
         uses: actions/upload-artifact@v4
