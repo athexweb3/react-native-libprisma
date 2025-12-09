@@ -1,0 +1,35 @@
+{
+    "$schema": "https://turbo.build/schema.json",
+    "tasks": {
+        "build": {
+            "dependsOn": [
+                "^build"
+            ],
+            "outputs": [
+                "lib/**",
+                "dist/**"
+            ]
+        },
+        "build:android": {
+            "cache": true,
+            "outputs": [
+                "android/build/**"
+            ]
+        },
+        "build:ios": {
+            "cache": true,
+            "outputs": [
+                "ios/build/**"
+            ]
+        },
+        "lint": {
+            "outputs": []
+        },
+        "test": {
+            "outputs": []
+        },
+        "typecheck": {
+            "outputs": []
+        }
+    }
+}
