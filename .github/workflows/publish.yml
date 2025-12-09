@@ -1,11 +1,14 @@
 name: Publish
 
 on:
+  push:
+    tags:
+      - 'v*'
   workflow_dispatch:
     inputs:
       increment:
-        description: 'Version increment (major, minor, patch)'
-        required: true
+        description: 'Version increment'
+        required: false
         default: 'patch'
         type: choice
         options:
@@ -49,7 +52,12 @@ jobs:
 
       - name: Release
         working-directory: packages/react-native-libprisma
-        run: bun run release-it ${{ inputs.increment }} --ci
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            bun run release-it ${{ inputs.increment }} --ci
+          else
+            bun run release-it --ci --no-git-tag --no-increment --npm.tag=latest
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
