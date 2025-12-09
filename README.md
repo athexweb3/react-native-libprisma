@@ -122,6 +122,7 @@ See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the 
 
 - react-native-libprisma is licensed under MIT.
 - This project builds upon the excellent work of [Telegram's libprisma](https://github.com/TelegramMessenger/libprisma) and [Prism.js](https://prismjs.com/).
+- Special thanks to [LearnWithSumit](https://github.com/learnwithsumit) for VSCode theme inspiration.
 
 ---
 
