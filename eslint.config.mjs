@@ -13,6 +13,19 @@ const compat = new FlatCompat({
 });
 
 export default [
+  {
+    ignores: [
+      '**/node_modules/**',
+      '**/lib/**',
+      '**/generate.js',
+      '**/scripts/**',
+      '**/components/**',
+      '**/examples/mobile/.expo/**',
+      '**/.expo/**',
+      '**/android/**',
+      '**/ios/**',
+    ],
+  },
   ...fixupConfigRules(compat.extends('prettier')),
   {
     plugins: { prettier },
@@ -20,8 +33,5 @@ export default [
       'react/react-in-jsx-scope': 'off',
       'prettier/prettier': 'error',
     },
-  },
-  {
-    ignores: ['node_modules/', 'lib/', 'generate.js', 'scripts/', 'components/', 'examples/mobile/.expo/'],
   },
 ];
