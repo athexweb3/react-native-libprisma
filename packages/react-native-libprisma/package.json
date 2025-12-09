@@ -148,17 +148,19 @@
   "release-it": {
     "git": {
       "commitMessage": "chore: release ${version}",
-      "tagName": "v${version}"
+      "tagName": "v${version}",
+      "push": false
     },
     "npm": {
-      "publish": true,
+      "publish": false,
       "versionArgs": [
         "--workspaces-update=false"
       ]
     },
     "github": {
-      "release": true
+      "release": false
     },
+    "ci": true,
     "plugins": {
       "@release-it/conventional-changelog": {
         "preset": {
