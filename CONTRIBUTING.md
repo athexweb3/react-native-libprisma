@@ -1,86 +1,53 @@
 # Contributing
 
-Contributions are always welcome, no matter how large or small!
-
-We want this community to be friendly and respectful to each other. Please follow it in all your interactions with the project. Before contributing, please read the [code of conduct](./CODE_OF_CONDUCT.md).
+We want this community to be friendly and respectful to each other. Please follow it in all your interactions with the project.
 
 ## Development workflow
 
-This project is a monorepo managed using [Bun workspaces](https://bun.sh/docs/install/workspaces). It contains the following packages:
-
-- The library package in the root directory.
-- An example app in the `example/` directory.
-
-To get started with the project, make sure you have the correct version of [Node.js](https://nodejs.org/) installed. See the [`.nvmrc`](./.nvmrc) file for the version used in this project.
-
-Run `bun install` in the root directory to install the required dependencies for each package:
+To get started with the project, run `bun install` in the root directory to install the required dependencies for each package:
 
 ```sh
-bun install
+bun i
 ```
 
-> Since the project relies on Bun workspaces, you cannot use [`npm`](https://github.com/npm/cli) or [`yarn`](https://yarnpkg.com/) for development.
+> While it's possible to use [`npm`](https://github.com/npm/cli), [`yarn`](https://classic.yarnpkg.com/), or [`pnpm`](https://pnpm.io), the tooling is built around [`bun`](https://bun.sh), so you'll have an easier time if you use `bun` for development.
 
-The [example app](/example/) demonstrates usage of the library. You need to run it to test any changes you make.
+While developing, you can run the [example app](/example/) to test your changes. Any changes you make in your library's JavaScript code will be reflected in the example app without a rebuild. If you change any native code, then you'll need to rebuild the example app.
 
-It is configured to use the local version of the library, so any changes you make to the library's source code will be reflected in the example app. Changes to the library's JavaScript code will be reflected in the example app without a rebuild, but native code changes will require a rebuild of the example app.
-
-If you want to use Android Studio or Xcode to edit the native code, you can open the `example/android` or `example/ios` directories respectively in those editors. To edit the Objective-C or Swift files, open `example/ios/DeviceGeometryExample.xcworkspace` in Xcode and find the source files at `Pods > Development Pods > react-native-device-geometry`.
-
-To edit the Java or Kotlin files, open `example/android` in Android studio and find the source files at `react-native-device-geometry` under `Android`.
-
-You can use various commands from the root directory to work with the project.
-
-To start the packager:
+To develop in iOS, build the CocoaPods dependencies:
 
 ```sh
-bun example start
+bun bootstrap
 ```
 
-To run the example app on Android:
+To start the Metro bundler/packager:
 
 ```sh
-bun example android
+bun start
 ```
 
-To run the example app on iOS:
-
+To start the app:
 ```sh
-bun example ios
+bun ios # or android
 ```
 
-To confirm that the app is running with the new architecture, you can check the Metro logs for a message like this:
+Make sure your code passes TypeScript and ESLint. Run the following to verify:
 
 ```sh
-Running "DeviceGeometryExample" with {"fabric":true,"initialProps":{"concurrentRoot":true},"rootTag":1}
-```
-
-Note the `"fabric":true` and `"concurrentRoot":true` properties.
-
-Make sure your code passes TypeScript:
-
-```sh
-bun typecheck
-```
-
-To check for linting errors, run the following:
-
-```sh
+bun tsc
 bun lint
+bun format
 ```
 
 To fix formatting errors, run the following:
 
 ```sh
-bun lint --fix
+bun lint:fix
+bun format:fix
 ```
 
-Remember to add tests for your change if possible. Run the unit tests by:
-
-```sh
-bun test
-```
-
+To edit the Objective-C files, open `example/ios/GrpcExample.xcworkspace` in Xcode.
+To edit the Kotlin files, open `example/android` in Android Studio.
 
 ### Commit message convention
 
@@ -89,35 +56,30 @@ We follow the [conventional commits specification](https://www.conventionalcommi
 - `fix`: bug fixes, e.g. fix crash due to deprecated method.
 - `feat`: new features, e.g. add new method to the module.
 - `refactor`: code refactor, e.g. migrate from class components to hooks.
-- `docs`: changes into documentation, e.g. add usage example for the module.
+- `docs`: changes into documentation, e.g. add usage example for the module..
 - `test`: adding or updating tests, e.g. add integration tests using detox.
 - `chore`: tooling changes, e.g. change CI config.
 
-Our pre-commit hooks verify that your commit message matches this format when committing.
+### Linting and tests
 
+[ESLint](https://eslint.org/), [Prettier](https://prettier.io/), [TypeScript](https://www.typescriptlang.org/)
+
+We use [TypeScript](https://www.typescriptlang.org/) for type checking, [ESLint](https://eslint.org/) with [Prettier](https://prettier.io/) for linting and formatting the code, and [Jest](https://jestjs.io/) for testing.
+
+Our CI verify that the linter and tests pass when creating a PR.
 
 ### Publishing to npm
 
 We use [release-it](https://github.com/release-it/release-it) to make it easier to publish new versions. It handles common tasks like bumping version based on semver, creating tags and releases etc.
 
-To publish new versions, run the following:
-
-```sh
-bun run release
-```
-
-
 ### Scripts
 
 The `package.json` file contains various scripts for common tasks:
 
-- `bun install`: setup project by installing dependencies.
-- `bun typecheck`: type-check files with TypeScript.
-- `bun lint`: lint files with [ESLint](https://eslint.org/).
-- `bun test`: run unit tests with [Jest](https://jestjs.io/).
-- `bun example start`: start the Metro server for the example app.
-- `bun example android`: run the example app on Android.
-- `bun example ios`: run the example app on iOS.
+- `bun bootstrap`: setup project by installing all dependencies and pods.
+- `bun tsc`: type-check files with TypeScript.
+- `bun lint`: lint files with ESLint.
+- `bun example`: start the Metro server for the example app.
 
 ### Sending a pull request
 
