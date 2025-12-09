@@ -10,7 +10,7 @@
 
 High-performance syntax highlighting for React Native.
 
-> Note: Note: This library is currently in active development, porting to OpenSSL 3.3+, New Architecture, Bridgeless, and [`Nitro Modules`](https://github.com/mrousavy/react-native-nitro).
+> Note: This library is currently in active development, porting to New Architecture, Bridgeless, and [`Nitro Modules`](https://github.com/mrousavy/react-native-nitro).
 
 > Note: Minimum supported version of React Native is `0.75`.
 
@@ -19,7 +19,7 @@ High-performance syntax highlighting for React Native.
 Unlike other JS-based syntax highlighters, `react-native-libprisma` is powered by a C++ port of Prism.js using JSI, providing much greater performance - especially on mobile devices.
 
 - 🏎️ **Blazing Fast** - C++ implementation with native performance via JSI
-- ⚡️ **Zero JS Dependencies** - Pure native module using Turbo Modules
+- ⚡️ **Zero Dependencies** - No dependencies on C++ or TypeScript layers
 - 🧪 **200+ Languages** - Comprehensive language support out of the box
 - 🎨 **11 Built-in Themes** - Beautiful, ready-to-use themes (Dracula, VS Code, etc.)
 - 🔢 **TypeScript First** - Full type safety with autocomplete
@@ -29,7 +29,8 @@ Unlike other JS-based syntax highlighters, `react-native-libprisma` is powered b
 
 | Version | RN Architecture | Modules |
 | ------- | ------ | ------- |
-| `0.x`     | new [->](https://github.com/reactwg/react-native-new-architecture/blob/main/docs/enable-apps.md)  | Nitro Modules [->](https://github.com/mrousavy/nitro) |
+| `0.4.x +` | New / Bridgeless | Nitro Modules |
+| `<= 0.3.x` | Old / New | Turbo Modules |
 
 ## Benchmarks
 
