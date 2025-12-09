@@ -30,12 +30,15 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: Generate grammars
+        working-directory: packages/react-native-libprisma
         run: bun run embed-grammars
 
       - name: Build package
+        working-directory: packages/react-native-libprisma
         run: bun run prepare
 
       - name: Publish to NPM
+        working-directory: packages/react-native-libprisma
         run: |
           echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > .npmrc
           npm publish

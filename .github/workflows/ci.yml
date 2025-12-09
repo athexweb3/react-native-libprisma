@@ -26,12 +26,15 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Generate grammars
+        working-directory: packages/react-native-libprisma
         run: bun run embed-grammars
 
       - name: Lint files
+        working-directory: packages/react-native-libprisma
         run: bun run lint
 
       - name: Typecheck files
+        working-directory: packages/react-native-libprisma
         run: bun run typecheck
 
   test:
@@ -45,6 +48,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Generate grammars
+        working-directory: packages/react-native-libprisma
         run: bun run embed-grammars
 
       - name: Run unit tests
@@ -61,6 +65,7 @@ jobs:
         uses: ./.github/actions/setup
 
       - name: Build package
+        working-directory: packages/react-native-libprisma
         run: bun run prepare
 
   build-android:
@@ -113,7 +118,7 @@ jobs:
           path: |
             ~/.gradle/wrapper
             ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('examples/mobile/android/gradle/wrapper/gradle-wrapper.properties') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('example/android/gradle/wrapper/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
 
@@ -165,12 +170,12 @@ jobs:
 
       - name: Prebuild native directories
         if: env.turbo_cache_hit != 1
-        working-directory: examples/mobile
+        working-directory: example
         run: bunx expo prebuild --no-install
 
       - name: Install CocoaPods
         if: env.turbo_cache_hit != 1
-        working-directory: examples/mobile/ios
+        working-directory: example/ios
         run: pod install
 
       - name: Build example for iOS
